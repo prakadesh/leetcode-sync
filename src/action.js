@@ -72,6 +72,7 @@ async function getInfo(submission, session, csrf) {
 
   // No need to break on first request error since that would be done when getting submissions
   const getInfo = async (maxRetries = 5, retryCount = 0) => {
+    
     try {
       const response = await axios.post('https://leetcode.com/graphql/', data, config);
       const runtimePercentile = `${response.data.data.submissionDetails.runtimePercentile.toFixed(2)}%`;
@@ -118,6 +119,8 @@ async function commit(params) {
 
   const prefix = !!destinationFolder ? `${destinationFolder}/` : '';
   const commitName = !!commitHeader ? commitHeader : COMMIT_MESSAGE;
+
+  console.log('Submission Object:', submission);
 
   if ('runtimePerc' in submission) {
     message = `${commitName} Runtime - ${submission.runtime} (${submission.runtimePerc}), Memory - ${submission.memory} (${submission.memoryPerc})`;
